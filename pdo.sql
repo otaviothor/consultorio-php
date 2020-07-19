@@ -1,0 +1,54 @@
+CREATE DATABASE clinica;
+USE clinica;
+
+CREATE TABLE medico (
+  id INT NOT NULL AUTO_INCREMENT,
+  nome VARCHAR(255) NOT NULL,
+  telefone VARCHAR(255) NOT NULL,
+  crm VARCHAR(255) NOT NULL,
+  idEspecialidade INT NOT NULL,
+  PRIMARY KEY(id)
+);
+
+CREATE TABLE paciente (
+  id INT NOT NULL AUTO_INCREMENT,
+  nome VARCHAR(255) NOT NULL,
+  idade VARCHAR(10) NOT NULL,
+  idPlano INT NOT NULL,
+  telefone VARCHAR(255) NOT NULL,
+  PRIMARY KEY(id)
+);
+
+CREATE TABLE consulta (
+  id INT NOT NULL AUTO_INCREMENT,
+  data VARCHAR(255) NOT NULL,
+  hora VARCHAR(10) NOT NULL,
+  idPaciente INT NOT NULL,
+  idMedico INT NOT NULL,
+  PRIMARY KEY(id)
+);
+
+CREATE TABLE especialidade(
+	id INT NOT NULL AUTO_INCREMENT,
+  nome VARCHAR(255) NOT NULL,
+  PRIMARY KEY(id)
+);
+
+CREATE TABLE plano(
+	id INT NOT NULL AUTO_INCREMENT,
+  nome VARCHAR(255) NOT NULL,
+  PRIMARY KEY(id)
+);
+
+ALTER TABLE consulta
+  ADD CONSTRAINT fkPaciente FOREIGN KEY (idPaciente) REFERENCES paciente (id) ON DELETE CASCADE,
+  ADD CONSTRAINT fkMedico FOREIGN KEY (idMedico) REFERENCES medico (id) ON DELETE CASCADE;
+
+ALTER TABLE paciente
+  ADD CONSTRAINT fkPlano FOREIGN KEY (idPlano) REFERENCES plano (id) ON DELETE CASCADE;
+
+ALTER TABLE medico
+  ADD CONSTRAINT fkEspecialidade FOREIGN KEY (idEspecialidade) REFERENCES especialidade (id) ON DELETE CASCADE;
+
+
+
